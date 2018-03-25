@@ -1,0 +1,30 @@
+<%= form_with(model: bookmark, local: true) do |form| %>
+  <% if bookmark.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h2><%= pluralize(bookmark.errors.count, "error") %> prohibited this bookmark from being saved:</h2>
+
+      <ul>
+      <% bookmark.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :title %>
+    <%= form.text_field :title, id: :bookmark_title, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :url %>
+    <%= form.text_field :url, id: :bookmark_url, class: 'form-control' %>
+  </div>
+  
+  <div class="form-group">
+    <%= form.label :form_tags, 'Tags' %>
+    <%= form.text_field :form_tags, id: :bookmark_form_tags, class: 'form-control' %>
+  </div>
+
+  <%= form.submit nil, class: 'btn btn-primary' %>
+<% end %>

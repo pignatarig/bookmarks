@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bookmarks</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class='container-fluid'>
+      <nav class="navbar navbar-light bg-light">
+        <%= link_to 'Bookmarks', root_path, class: 'navbar-brand' %>
+        <%= form_tag bookmarks_path, method: :get, class: 'form-inline' do %>
+          <%= text_field_tag :search, params[:search], class: 'form-control mr-sm-2', type: 'search', placeholder: 'Search' %>
+          <%= submit_tag "Search", class: 'btn btn-outline-success my-2 my-sm-0' %>
+        <% end %>
+      </nav>
+      <div class='container'>
+        <%= yield %>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+<h2>Bookmark</h2>
+
+<% if notice %>
+  <div class="alert alert-success" role="alert">
+    <%= notice %>
+  </div>
+<% end %>
+
+<p>
+  <strong>Title:</strong>
+  <%= @bookmark.title %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @bookmark.url %>
+</p>
+
+<p>
+  <strong>Tags:</strong>
+  <%= @bookmark.form_tags %>
+</p>
+
+<%= link_to 'Edit', edit_bookmark_path(@bookmark), class: 'btn btn-primary' %> |
+<%= link_to 'Back', bookmarks_path, class: 'btn btn-primary' %>
