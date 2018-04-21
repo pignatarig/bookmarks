@@ -12,19 +12,27 @@
       <th>Title</th>
       <th>Url</th>
       <th>Tags</th>
-      <th colspan="3"></th>
+      <th colspan="4"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @bookmarks.each do |bookmark| %>
-      <tr>
-        <td><%= bookmark.title %></td>
-        <td><%= link_to bookmark.url, bookmark.url, target: '_blank' %></td>
-        <td><%= bookmark.form_tags %></td>
-        <td><%= link_to 'Show', bookmark %></td>
-        <td><%= link_to 'Edit', edit_bookmark_path(bookmark) %></td>
-        <td><%= link_to 'Destroy', bookmark, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% @bookmarks.each do |site, bookmarks| %>
+      <tr class="table-primary">
+        <td colspan='7'>
+          Site: <%= site %>
+        </td>
+        <% bookmarks.each do |bookmark| %>
+          <tr>
+            <td><%= bookmark.title %></td>
+            <td><%= link_to bookmark.url, bookmark.url, target: '_blank' %></td>
+            <td><%= bookmark.form_tags %></td>
+            <td><%= link_to 'Shortened URL', shortened_path(bookmark.unique_id) %></td>
+            <td><%= link_to 'Show', bookmark %></td>
+            <td><%= link_to 'Edit', edit_bookmark_path(bookmark) %></td>
+            <td><%= link_to 'Destroy', bookmark, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

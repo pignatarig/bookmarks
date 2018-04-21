@@ -4,6 +4,10 @@ FactoryBot.define do
     url "https://www.google.com/maps?source=tldsi&hl=en"
   end
   
+  factory :site do
+    url "https://www.google.com"
+  end
+  
   factory :edited_bookmark, class: Bookmark do
     title "Edited Title"
     url "https://google.com/edited"

@@ -6,8 +6,10 @@ class Bookmark < ApplicationRecord
 
   validates :title, :url, presence: true
   validate :validate_url
+  validates :unique_id, uniqueness: true
   
   before_save :create_site
+  before_validation :generate_unique_id, :on => :create
   
   def validate_url
     begin
@@ -15,6 +17,13 @@ class Bookmark < ApplicationRecord
       errors.add(:url, 'invalid URL') unless uri && uri.host
     rescue URI::InvalidURIError
       errors.add(:url, 'invalid URL')
+    end
+  end
+  
+  def generate_unique_id
+    self.unique_id = SecureRandom.urlsafe_base64(5)
+    while Bookmark.exists?(unique_id: self.unique_id)
+      self.unique_id = SecureRandom.urlsafe_base64(5)
     end
   end
   
@@ -40,6 +49,12 @@ class Bookmark < ApplicationRecord
   end
   
   def self.search(q)
-    self.left_outer_joins(:tags).where("bookmarks.title LIKE :q OR bookmarks.url LIKE :q OR tags.title LIKE :q", q: "%#{q}%").uniq
+    bookmarks = self.includes(:site).left_outer_joins(:tags).where("bookmarks.title LIKE :q OR bookmarks.url LIKE :q OR tags.title LIKE :q", q: "%#{q}%")
+    sites = bookmarks.map(&:site).uniq
+    results = {}
+    sites.each do |site|
+      results[site.url.to_s] = bookmarks.where(site: site).uniq
+    end
+    results
   end
 end

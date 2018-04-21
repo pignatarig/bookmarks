@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "bookmarks/index", type: :view do
   before(:each) do
-    assign(:bookmarks, [create(:bookmark), create(:bookmark)])
+    assign(:bookmarks, {create(:site).url.to_s => [create(:bookmark), create(:bookmark)]})
   end
 
   it "renders a list of bookmarks" do

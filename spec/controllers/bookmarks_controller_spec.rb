@@ -139,5 +139,13 @@ RSpec.describe BookmarksController, type: :controller do
       expect(response).to redirect_to(bookmarks_url)
     end
   end
+  
+  describe "GET #shortened" do
+    it "returns a redirect response" do
+      bookmark = Bookmark.create! valid_attributes
+      get :shortened, params: {unique_id: bookmark.unique_id}, session: valid_session
+      expect(response).to redirect_to bookmark.url
+    end
+  end
 
 end

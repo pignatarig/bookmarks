@@ -34,6 +34,9 @@ RSpec.describe BookmarksController, type: :routing do
     it "routes to #destroy" do
       expect(:delete => "/bookmarks/1").to route_to("bookmarks#destroy", :id => "1")
     end
-
+    
+    it "routes to #shortened" do
+      expect(:get => "/1").to route_to("bookmarks#shortened", :unique_id => "1")
+    end
   end
 end

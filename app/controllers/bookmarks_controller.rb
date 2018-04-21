@@ -60,6 +60,12 @@ class BookmarksController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  # SHORTENED /unique_id
+  def shortened
+    bookmark = Bookmark.find_by_unique_id!(params[:unique_id])
+    redirect_to bookmark.url, status: :moved_permanently
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
